@@ -1,36 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFolder, FaFolderOpen, FaFile, FaImage } from 'react-icons/fa';
 import './style.css';
 import { Item } from '../../utils';
 
 interface FolderProps {
-    explorer: Item;
+    folderItem: Item;
     onSelect: (item: Item) => void;
     onFolderClick: (item: Item) => void;
     activeFolderId: string | null;
 }
 
-const Folder: React.FC<FolderProps> = ({ explorer, onSelect, onFolderClick, activeFolderId }) => {
+const Folder: React.FC<FolderProps> = ({ folderItem, onSelect, onFolderClick, activeFolderId }) => {
     const [expand, setExpand] = useState(false);
-    const isActive = explorer.id === activeFolderId;
+    const isActive = folderItem.id === activeFolderId;
     const handleDoubleClick = () => {
-        if (explorer.isFolder) {
+        if (folderItem.isFolder) {
             setExpand(!expand);
         } else {
-            onSelect(explorer);
+            onSelect(folderItem);
         }
     };
+    useEffect(() => {
+        if(activeFolderId === folderItem.id) {
+            setExpand(true);
+        }
+    }, [activeFolderId]);
 
     const handleClick = () => {
-        if (explorer.isFolder) {
-            onFolderClick(explorer);
+        if (folderItem.isFolder) {
+            onFolderClick(folderItem);
         }
     };
 
     const renderIcon = () => {
-        if (explorer.isFolder) {
+        if (folderItem.isFolder) {
             return expand ? <FaFolderOpen /> : <FaFolder />;
-        } else if (explorer.type === 'image') {
+        } else if (folderItem.type === 'image') {
             return <FaImage />;
         } else {
             return <FaFile />;
@@ -47,14 +52,14 @@ const Folder: React.FC<FolderProps> = ({ explorer, onSelect, onFolderClick, acti
                     backgroundColor: isActive ? 'lightblue' : 'transparent',
                 }}
             >
-                {renderIcon()} {explorer.name}
+                {renderIcon()} {folderItem.name}
             </div>
-            {expand && explorer.items && (
+            {expand && folderItem.items && (
                 <div className="innerFolderContainer">
-                    {explorer.items.map((item: Item) => (
+                    {folderItem.items.map((item: Item) => (
                         <Folder 
                             key={item.id} 
-                            explorer={item} 
+                            folderItem={item} 
                             onSelect={onSelect} 
                             onFolderClick={onFolderClick} 
                             activeFolderId={activeFolderId}

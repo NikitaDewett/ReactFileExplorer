@@ -11,6 +11,7 @@ interface FileViewerProps {
 const FileViewer: React.FC<FileViewerProps> = ({ item, onFolderClick }) => {
     const [activeItem, setActiveItem] = useState<Item | null>(null);
     useEffect(() => {
+        // If it's not a folder, we want to set the active item in case of a file or image
         if(!item?.isFolder) {
             setActiveItem(item as Item);
         }

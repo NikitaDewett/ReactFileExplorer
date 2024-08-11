@@ -10,6 +10,7 @@ const FileExplorer: React.FC = () => {
     const [activeFolderId, setActiveFolderId] = useState<string | null>(null);
 
     const handleSelect = async (item: Item) => {
+        // In case of a txt file, we want to open the file viewer with the content of the file
         if (item.type === 'file') {
             if (item.link) {
                 const fileContent = await fetchFile(item.link);
@@ -18,6 +19,10 @@ const FileExplorer: React.FC = () => {
                 console.error('File link is undefined');
             }
         } else {
+            /**
+             * If it's a folder, we want to open the folder with inner structure
+             * We can apply same logic for images, since we don't need to fetch them
+             */
             setSelectedItem(item);
         }
     };
@@ -30,8 +35,9 @@ const FileExplorer: React.FC = () => {
     return (
         <div className="explorerContainer">
             <div className="foldersContainer">
-                <Folder 
-                    explorer={data} 
+                <Folder
+                    // Gonna pass full data and render folders recursively
+                    folderItem={data} 
                     onSelect={handleSelect} 
                     onFolderClick={handleFolderClick} 
                     activeFolderId={activeFolderId}
