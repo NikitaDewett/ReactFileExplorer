@@ -28,14 +28,13 @@ const FileViewer: React.FC<FileViewerProps> = ({ item, onFolderClick }) => {
                 console.error('File link is undefined');
             }
         } else if (subItem.isFolder) {
-            console.log('folder', subItem);
             onFolderClick(subItem);
         } else {
             setActiveItem(subItem);
         }
     };
 
-    if (!item) return <div>Select a file or folder to view its content.</div>;
+    if (!item) return <div>Select a file or folder to view its content</div>;
 
     const renderSubItemIcon = (subItemType: string) => {
         switch(subItemType) {
@@ -52,7 +51,7 @@ const FileViewer: React.FC<FileViewerProps> = ({ item, onFolderClick }) => {
     return (
         <div>
             <div>
-                {item?.isFolder && <h3>Contents of {item.name}:</h3>}   
+                {item?.isFolder && <h3>Content of {item.name}:</h3>}   
                 <div className="gridContainer">
                     {item?.items?.map((subItem) => (
                         <div className="gridItem" key={subItem.id} onDoubleClick={() => handleDoubleClick(subItem)}>
@@ -62,7 +61,7 @@ const FileViewer: React.FC<FileViewerProps> = ({ item, onFolderClick }) => {
                     ))}
                 </div>
                 {activeItem && !activeItem?.isFolder && <div className="activeItemContainer">
-                <h3>Contents of {activeItem.name}:</h3>
+                <h3>Content of {activeItem.name}:</h3>
                     {activeItem.type === 'image' ? <img src={activeItem.url} alt={activeItem.name} className="imageViewer"/> : <pre>{activeItem.content}</pre>}
                 </div>}
             </div>
