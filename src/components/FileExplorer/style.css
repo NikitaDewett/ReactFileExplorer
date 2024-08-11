@@ -1,0 +1,13 @@
+.explorerContainer {
+    display: flex;
+}
+.fileViewerContainer {
+    width: 70%;
+    padding: 10px;
+}
+.foldersContainer {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+}
+

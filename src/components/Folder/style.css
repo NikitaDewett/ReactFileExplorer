@@ -1,0 +1,7 @@
+.folderContainer {
+    cursor: pointer;
+    padding: 5px;
+}
+.innerFolderContainer {
+    padding-left: 20px;
+}
